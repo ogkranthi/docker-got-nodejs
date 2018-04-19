@@ -98,7 +98,7 @@ function searchBattle(bat) {
 }
 
 var app = express();
-app.use(cors({ origin: 'http://0.0.0.0:49160' }));
+app.use(cors({ origin: 'http://129.150.223.182:9000' }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

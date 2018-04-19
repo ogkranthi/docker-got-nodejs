@@ -143,27 +143,37 @@
         }
 
         var xhttp = new XMLHttpRequest();
-        var url = "http://0.0.0.0:49160/battle/" + document.getElementById("search").value;
+        var url = "http://129.150.223.182:9000/battle/" + document.getElementById("search").value;
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var myArr = JSON.parse(xhttp.responseText);
-                console.log("first:" + myArr);
+                console.log("first:" + myArr[0]);
 
-                myArr.forEach(function(item) {
-                    //console.log("second:" +item);
-                    //console.log("third:"+item.year);
-                    //console.log("third:"+item.attacker_king);
-                    //console.log("third:"+item.defender_king);
-                    //console.log("third:"+item.note);
+                // myArr.forEach(function(item) {
+                //     //console.log("second:" +item);
+                //     //console.log("third:"+item.year);
+                //     //console.log("third:"+item.attacker_king);
+                //     //console.log("third:"+item.defender_king);
+                //     //console.log("third:"+item.note);
+                //     var iDiv = document.createElement('div');
+                //     //iDiv.id = 'i';
+                //     //iDiv.innerHTML = item.name;
+                //     //iDiv.innerHTML = item.year;
+                //     iDiv.appendChild(document.createTextNode(item.name));
+                //     //iDiv.appendChild(document.createTextNode(item.year));
+                //     document.getElementById('display').appendChild(iDiv);
+
+                // })
+
+                for (var i=0;i<myArr.length;i++){
+                    console.log(myArr[i].name);
                     var iDiv = document.createElement('div');
-                    //iDiv.id = 'i';
-                    //iDiv.innerHTML = item.name;
-                    //iDiv.innerHTML = item.year;
-                    iDiv.appendChild(document.createTextNode(item.name));
+                    iDiv.appendChild(document.createTextNode(myArr[i].name));
                     //iDiv.appendChild(document.createTextNode(item.year));
                     document.getElementById('display').appendChild(iDiv);
+                };
 
-                })
+                
 
                 document.getElementById('display').addEventListener("click", function() {
 
@@ -236,7 +246,7 @@
     function getDetails(attacker) {
         console.log("Attacker inside:" + attacker);
         var xhttp = new XMLHttpRequest();
-        var url = "http://0.0.0.0:49160/character/" + attacker;
+        var url = "http://129.150.223.182:9000/character/" + attacker;
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 var myChar = JSON.parse(xhttp.responseText);
