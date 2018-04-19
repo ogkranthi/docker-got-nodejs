@@ -1,0 +1,315 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Game of KRT Thrones</title>
+    <marquee id="mark"> Search GOT battles </marquee>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        //document.getElementById('im').style.display = 'none';
+        // function showInput() {
+        //     var node = document.getElementById('display');
+        //     while (node.hasChildNodes()) {
+        //         node.removeChild(node.lastChild);
+        //     }
+
+        //     var xhttp = new XMLHttpRequest();
+        //     var url = "http://localhost:3000/battle/" + document.getElementById("search").value;
+        //     xhttp.onreadystatechange = function() {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             var myArr = JSON.parse(xhttp.responseText);
+        //             console.log("first:" + myArr);
+
+        //             myArr.forEach(function(item) {
+        //                 var iDiv = document.createElement('div');
+        //                 //iDiv.id = 'i';
+        //                 //iDiv.innerHTML = item.name;
+        //                 //iDiv.innerHTML = item.year;
+        //                 iDiv.appendChild(document.createTextNode(item.name));
+        //                 //iDiv.appendChild(document.createTextNode(item.year));
+        //                 document.getElementById('display').appendChild(iDiv);
+
+        //             })
+
+        //             document.getElementById('display').addEventListener("click", function() {
+
+        //                 console.log("clicked" + event.target.innerHTML);
+        //                 //console.log("second" + target);
+        //                 document.getElementById('detail').innerHTML = event.target.innerHTML;
+        //                 var name = event.target.innerHTML;
+        //                 myArr.forEach(function(data) {
+
+        //                     if (data.name === name) {
+        //                         var details = data.year + data.attacker_king + data.defender_king + data.note;
+        //                         //   document.getElementById('im').style.display = 'none';
+        //                         document.getElementById('im').src = data.image;
+        //                         document.getElementById('detail').innerHTML = details;
+        //                     }
+        //                 });
+
+        //             });
+
+
+
+        //         } else {
+        //             //console.log(this.status);
+        //         }
+        //     };
+
+        //     xhttp.open("GET", url, true);
+        //     xhttp.send();
+        // }
+	
+
+        function showInput() {
+			document.getElementById('im').style.display = "none";
+            var node = document.getElementById('display');
+            while (node.hasChildNodes()) {
+
+                node.removeChild(node.lastChild);
+            }
+
+            var xhttp = new XMLHttpRequest();
+            var url = "http://localhost:3000/battle/" + document.getElementById("search").value;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myArr = JSON.parse(xhttp.responseText);
+                    console.log("first:" + myArr);
+
+                    myArr.forEach(function(item) {
+                        //console.log("second:" +item);
+                        //console.log("third:"+item.year);
+                        //console.log("third:"+item.attacker_king);
+                        //console.log("third:"+item.defender_king);
+                        //console.log("third:"+item.note);
+                        var iDiv = document.createElement('div');
+                        //iDiv.id = 'i';
+                        //iDiv.innerHTML = item.name;
+                        //iDiv.innerHTML = item.year;
+                        iDiv.appendChild(document.createTextNode(item.name));
+                        //iDiv.appendChild(document.createTextNode(item.year));
+                        document.getElementById('display').appendChild(iDiv);
+
+                    })
+
+                    document.getElementById('display').addEventListener("click", function() {
+
+                        console.log("clicked" + event.target.innerHTML);
+                        //console.log("second" + target);
+                        document.getElementById('detail').innerHTML = event.target.innerHTML;
+                        var name = event.target.innerHTML;
+                        myArr.forEach(function(data) {
+
+                            if (data.name === name) {
+								document.getElementById('im').style.display = "inline";
+                                console.log(data.name);
+                                var details = data.name + '<br>' + data.year + '<br>' + data.attacker_king + '<br>' + data.defender_king + '<br>' + data.note + '<br>';
+                                //console.log(details);
+                                //console.log(data.image);
+                                getDetails(data.attacker_king);
+                                document.getElementById('im').src = data.image;
+
+                                document.getElementById('detail').innerHTML = "Details are " + '<br>' + "Name of Battle: " +data.name + '<br>' + "Year: " + data.year +'<br>' + "Name of attacker king: " +data.attacker_king +'<br>' + "Name of defender king: " + data.defender_king +'<br>' + "Discription: " +data.note;
+                            }
+                        });
+
+                    });
+
+
+
+
+
+
+
+                    ///////////remove span details on click//////
+                    document.getElementById('display').addEventListener("click", function() {
+
+
+                        document.getElementById('display').innerHTML = '';
+
+
+                    });
+
+
+
+
+                } else {
+                    //console.log(this.status);
+                }
+            };
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+
+
+        }
+
+        function getDetails(attacker) {
+            console.log(attacker);
+
+            var xhttp = new XMLHttpRequest();
+            var url = "http://localhost:3000/character/" + attacker;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myChar = JSON.parse(xhttp.responseText);
+
+                    myChar.forEach(function(data) {
+                        console.log("chars" + data.name);
+                    });
+                } else {
+
+                }
+
+
+            }
+
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+
+        function reset() {
+			document.getElementById('display').innerHTML= '';
+            document.getElementById('detail').innerHTML = '';
+            document.getElementById('im').src = '';
+            document.getElementById('search').focus();
+			document.getElementById('im').style.display = "none";
+
+        }
+		function clrImage(){
+			document.getElementById('im').style.display = "none";
+		}
+    </script>
+</head>
+
+<body onload="clrImage()">
+    <div id="bat" style="border:1px solid black">
+        <div class="searchBar">
+            <input type="text" id="search">
+            <button id="submit" type="button" class="btn btn-primary" onclick="showInput()">Submit</button>
+            <button id="reset" type="button" class="btn btn-primary" onclick="reset()">Reset</button>
+            <p class="disp"><span id='display'></span></p>
+        </div>
+        <div id="res">
+            <div id="detail">
+            </div>
+            <img id="im" width="400px" height="500px">
+        </div>
+    </div>
+
+    <section>
+        <h2>Flash Comments</h2>
+        <div class="post">
+            <!-- Put here Content like Youtube Video, Blog Post or Live Stream -->
+        </div>
+    </section>
+    <section>
+
+        <div class="flash-comments">
+            <div class="header">
+                <div class="text"></div>
+            </div>
+            <form class="pure-form" id="comment-form">
+                <!-- Here we will put a form to create new comment -->
+                <div class="comment-form">
+                    <div class="left-side">
+                        <div class="row">
+                            <input type="text" required placeholder="enter your name" id="new_comment_name">
+                            <input placeholder="enter valid email" required type="email" id="new_comment_email">
+                        </div>
+                        <div class="row">
+                            <textarea placeholder="enter comment text" required id="new_comment_text" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="right-side">
+                        <button type="submit" class="button-secondary pure-button">Send Comment</button>
+                    </div>
+                </div>
+            </form>
+            <div class="comments-list" id="comments-list">
+                <!-- Here we will display live comments -->
+                <script id="comment-template" type="text/x-template">
+                    <div class="comment-info">
+                        <div class="row">
+                            <div class="name">Name:{{name}}</div>
+                            <div class="email">email:{{email}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Message:{{comment}}</div>
+                        </div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="https://js.pusher.com/3.2/pusher.min.js"></script>
+</body>
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var serverUrl = "/",
+        comments = [],
+        pusher = new Pusher('8da7bb601e3e1a0400e1', {
+            cluster: 'us2',
+            encrypted: true
+        });
+
+    var channel = pusher.subscribe('flash-comments');
+    // channel.bind('my-event', function(data) {
+    //     alert(data.message);
+    // });
+
+    var commentForm = document.getElementById('comment-form');
+
+    // Adding to Comment Form Submit Event
+    commentForm.addEventListener("submit", addNewComment);
+
+    function addNewComment(event) {
+        event.preventDefault();
+        var newComment = {
+            "name": document.getElementById('new_comment_name').value,
+            "email": document.getElementById('new_comment_email').value,
+            "comment": document.getElementById('new_comment_text').value
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", serverUrl + "comment", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState != 4 || xhr.status != 200) return;
+
+            // On Success of creating a new Comment
+            console.log("Success: " + xhr.responseText);
+            commentForm.reset();
+        };
+        xhr.send(JSON.stringify(newComment));
+    }
+
+
+    //Binding comments to the DOM
+    var commentsList = document.getElementById('comments-list'),
+        commentTemplate = document.getElementById('comment-template');
+
+    // Binding to Pusher Event on our 'flash-comments' Channel
+    channel.bind('new_comment', newCommentReceived);
+
+    // New Comment Received Event Handler
+    // We will take the Comment Template, replace placeholders & append to commentsList
+    function newCommentReceived(data) {
+        var newCommentHtml = commentTemplate.innerHTML.replace('{{name}}', data.name);
+        newCommentHtml = newCommentHtml.replace('{{email}}', data.email);
+        newCommentHtml = newCommentHtml.replace('{{comment}}', data.comment);
+        var newCommentNode = document.createElement('div');
+        newCommentNode.classList.add('comment');
+        newCommentNode.innerHTML = newCommentHtml;
+        commentsList.appendChild(newCommentNode);
+    }
+</script>
+
+</html>

@@ -1,0 +1,23 @@
+{
+    "name": "got",
+    "version": "1.0.0",
+    "description": "GOT App on docker",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "connect": "^3.6.6",
+        "cors": "^2.8.4",
+        "express": "^4.16.3",
+        "gridfs-stream": "^1.1.1",
+        "mongodb": "^2.2.33",
+        "mongoose": "^5.0.15",
+        "path": "^0.12.7",
+        "pusher": "^1.5.1",
+        "serve-static": "^1.13.2"
+    }
+}
